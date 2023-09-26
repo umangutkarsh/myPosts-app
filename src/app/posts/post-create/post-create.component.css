@@ -1,9 +1,13 @@
-mat-card {
-  width: 80%;
-  margin: auto;
-}
-
 mat-form-field,
 textarea {
   width: 100%;
+}
+
+button {
+  width: 5%;
+  margin: 1rem auto 1rem 1rem;
+}
+
+mat-card {
+  margin-top: 1rem;
 }
