@@ -9,27 +9,37 @@ import { Post } from './post.model';
 @Injectable()
 export class PostsService {
   private posts: Post[] = [];
-  private postsUpdated = new Subject<Post[]>();
+  private postsUpdated = new Subject<{ posts: Post[]; postsCount: number }>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getPosts() {
+  getPosts(postsPerPage: number, currentPage: number) {
+    const queryParams = `?pageSize=${postsPerPage}&pageIndex=${currentPage}`;
     this.http
-      .get<{ message: string; posts: any }>('http://localhost:3000/api/posts')
+      .get<{ message: string; posts: any; maxPosts: number }>(
+        'http://localhost:3000/api/posts' + queryParams
+      )
       .pipe(
         map((postData) => {
-          return postData.posts.map((post: any) => {
-            return {
-              title: post.title,
-              content: post.content,
-              id: post._id,
-            };
-          });
+          return {
+            posts: postData.posts.map((post: any) => {
+              return {
+                title: post.title,
+                content: post.content,
+                id: post._id,
+                imagePath: post.imagePath,
+              };
+            }),
+            maxPosts: postData.maxPosts,
+          };
         })
       )
-      .subscribe((transformedPosts) => {
-        this.posts = transformedPosts;
-        this.postsUpdated.next([...this.posts]);
+      .subscribe((transformedPostsData) => {
+        this.posts = transformedPostsData.posts;
+        this.postsUpdated.next({
+          posts: [...this.posts],
+          postsCount: transformedPostsData.maxPosts,
+        });
       });
   }
 
@@ -58,7 +68,7 @@ export class PostsService {
     postData.append('image', image, title);
 
     this.http
-      .post<{ message: string; post: Post }>(
+      .post<{ message: string; post: Post; maxPosts: number }>(
         'http://localhost:3000/api/posts',
         postData
       )
@@ -72,7 +82,10 @@ export class PostsService {
         };
         this.posts.push(post);
         // this.posts.push(responseData.createdPost);
-        this.postsUpdated.next([...this.posts]);
+        this.postsUpdated.next({
+          posts: [...this.posts],
+          postsCount: responseData.maxPosts,
+        });
         this.router.navigate(['/']);
       });
     console.log(postData);
