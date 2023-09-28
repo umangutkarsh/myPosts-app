@@ -34,32 +34,24 @@ router.post(
   (req, res, next) => {
     // const post = req.body;
     const url = req.protocol + "://" + req.get("host");
-    let fetchedPosts;
     const post = new Post({
       title: req.body.title,
       content: req.body.content,
       imagePath: url + "/images/" + req.file.filename,
     });
     console.log(post);
-    post
-      .save()
-      .then((createdPost) => {
-        //  console.log(createdPost);
-        fetchedPosts = createdPost;
-        return Post.count();
-      })
-      .then((count) => {
-        res.status(201).json({
-          message: "Post created successfully",
-          post: {
-            id: fetchedPosts._id,
-            title: fetchedPosts.title,
-            content: fetchedPosts.content,
-            imagePath: fetchedPosts.imagePath,
-          },
-          maxPosts: count,
-        });
+    post.save().then((createdPost) => {
+      //  console.log(createdPost);
+      res.status(201).json({
+        message: "Post created successfully",
+        post: {
+          id: createdPost._id,
+          title: createdPost.title,
+          content: createdPost.content,
+          imagePath: createdPost.imagePath,
+        },
       });
+    });
   }
 );
 
@@ -73,17 +65,15 @@ router.put(
       const url = req.protocol + "://" + req.get("host");
       imagePath = url + "/images/" + req.file.filename;
     }
-    let fetchedPosts;
     const post = new Post({
       _id: req.body.id,
       title: req.body.title,
       content: req.body.content,
       imagePath: imagePath,
     });
-    // console.log(post);
+    console.log(post);
     Post.updateOne({ _id: req.params.id }, post).then((updatedPost) => {
       console.log(updatedPost);
-      fetchedPosts = updatedPost;
       res.status(200).json({ message: "Updated successfully" });
     });
   }
