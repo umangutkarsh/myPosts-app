@@ -11,3 +11,13 @@ info-text {
 mat-spinner {
   margin: auto;
 }
+
+.post-image {
+  width: 100%;
+  text-align: center;
+}
+
+.post-image img {
+  width: 100%;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+}
