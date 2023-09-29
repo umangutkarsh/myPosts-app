@@ -106,7 +106,6 @@ export class PostCreateComponent implements OnInit {
         this.form.value.image
       );
     }
-    this.isLoading = false;
 
     this.form.reset();
   }
