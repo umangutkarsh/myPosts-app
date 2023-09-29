@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const checkAuth = require("../middleware/check-auth");
 
 const Post = require("../models/post");
 
@@ -30,6 +31,7 @@ const storage = multer.diskStorage({
 
 router.post(
   "/",
+  checkAuth,
   multer({ storage: storage }).single("image"),
   (req, res, next) => {
     // const post = req.body;
@@ -57,6 +59,7 @@ router.post(
 
 router.put(
   "/:id",
+  checkAuth,
   multer({ storage: storage }).single("image"),
   (req, res, next) => {
     // console.log(req.file);
@@ -113,7 +116,7 @@ router.get("/:id", (req, res, next) => {
   });
 });
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", checkAuth, (req, res, next) => {
   Post.deleteOne({ _id: req.params.id }).then((result) => {
     console.log(req.params.id);
     res.status(200).json({ message: "Deleted successfully" });
