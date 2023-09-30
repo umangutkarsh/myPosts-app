@@ -4,7 +4,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { PostsModule } from './posts/posts.module';
-import { AuthModule } from './auth/auth.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -24,7 +23,6 @@ import { ErrorComponent } from './auth/error/error.component';
     HttpClientModule,
     AngularMaterialModule,
     PostsModule,
-    AuthModule,
   ],
   providers: [
     PostsService,
