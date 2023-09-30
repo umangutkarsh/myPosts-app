@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 
-const createUser = (req, res, next) => {
+exports.createUser = (req, res, next) => {
   //   console.log(req.body);
 
   bcrypt.hash(req.body.password, 10).then((hash) => {
@@ -26,14 +26,14 @@ const createUser = (req, res, next) => {
   });
 };
 
-const loginUser = async (req, res, next) => {
+exports.loginUser = (req, res, next) => {
   let fetchedUser;
-  await User.findOne({ email: req.body.email })
+  User.findOne({ email: req.body.email })
     .then((user) => {
-      fetchedUser = user;
       if (!user) {
-        return res.status(401).json({ message: "User not found" });
+        return res.status(401).json({ message: "Auth failed" });
       }
+      fetchedUser = user;
       return bcrypt.compare(req.body.password, user.password);
     })
     .then((userExists) => {
@@ -58,6 +58,3 @@ const loginUser = async (req, res, next) => {
         .json({ message: "Invalid authentication credentials" });
     });
 };
-
-exports.createUser = createUser;
-exports.loginUser = loginUser;

@@ -7,9 +7,9 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Post } from './post.model';
 
-const BACKEND_URL = environment.apiUrl + 'posts/';
+const BACKEND_URL = environment.apiUrl + '/posts/';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PostsService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<{ posts: Post[]; postsCount: number }>();
@@ -17,7 +17,7 @@ export class PostsService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getPosts(postsPerPage: number, currentPage: number) {
-    const queryParams = `?pageSize=${postsPerPage}&pageIndex=${currentPage}`;
+    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
     this.http
       .get<{ message: string; posts: any; maxPosts: number }>(
         BACKEND_URL + queryParams
@@ -73,10 +73,7 @@ export class PostsService {
     postData.append('image', image, title);
 
     this.http
-      .post<{ message: string; post: Post; maxPosts: number }>(
-        BACKEND_URL,
-        postData
-      )
+      .post<{ message: string; post: Post }>(BACKEND_URL, postData)
       .subscribe((responseData) => {
         this.router.navigate(['/']);
       });
@@ -84,7 +81,7 @@ export class PostsService {
   }
 
   updatePost(
-    id: string | null,
+    id: string | null | Blob | undefined,
     title: string,
     content: string,
     image: File | string
@@ -93,6 +90,7 @@ export class PostsService {
     let postData: Post | FormData;
     if (typeof image === 'object') {
       postData = new FormData();
+      // postData.append('id', id);
       postData.append('title', title);
       postData.append('content', content);
       postData.append('image', image, title);
@@ -111,7 +109,7 @@ export class PostsService {
     });
   }
 
-  deletePost(postId: string | null | undefined) {
+  deletePost(postId: string | null | undefined | Blob) {
     return this.http.delete(BACKEND_URL + `${postId}`);
   }
 }

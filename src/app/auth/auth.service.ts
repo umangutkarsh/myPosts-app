@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 
 const BACKEND_URL = environment.apiUrl + 'user/';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   private isAuthenticated = false;
   private token: string | null | undefined;

@@ -18,10 +18,8 @@ exports.createPost = (req, res, next) => {
       res.status(201).json({
         message: "Post created successfully",
         post: {
+          ...createdPost,
           id: createdPost._id,
-          title: createdPost.title,
-          content: createdPost.content,
-          imagePath: createdPost.imagePath,
         },
       });
     })
@@ -32,7 +30,7 @@ exports.createPost = (req, res, next) => {
 
 exports.updatePost = (req, res, next) => {
   // console.log(req.file);
-  let imagePath = req.body.imagPath;
+  let imagePath = req.body.imagePath;
   if (req.file) {
     const url = req.protocol + "://" + req.get("host");
     imagePath = url + "/images/" + req.file.filename;
@@ -63,15 +61,14 @@ exports.updatePost = (req, res, next) => {
 
 exports.getPosts = (req, res, next) => {
   console.log(req.query);
-  const pageSize = +req.query.pageSize;
-  const currentPage = +req.query.pageIndex;
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const postQuery = Post.find();
   let fetchedPosts;
   if (pageSize && currentPage) {
-    Post.find()
-      .skip(pageSize * currentPage)
-      .limit(pageSize);
+    postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
   }
-  Post.find()
+  postQuery
     .then((documents) => {
       fetchedPosts = documents;
       return Post.count();

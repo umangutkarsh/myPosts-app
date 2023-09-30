@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './auth/auth.service';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
-import { ErrorComponent } from './auth/error/error.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, ErrorComponent],
@@ -25,8 +25,6 @@ import { ErrorComponent } from './auth/error/error.component';
     PostsModule,
   ],
   providers: [
-    PostsService,
-    AuthService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

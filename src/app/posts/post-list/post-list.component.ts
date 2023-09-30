@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { Subscription } from 'rxjs';
+
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
-import { Subscription } from 'rxjs';
-import { PageEvent } from '@angular/material/paginator';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
@@ -54,13 +55,14 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   onChangedPage(pageData: PageEvent) {
+    this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.postsPerPage = pageData.pageSize;
     this.postsService.getPosts(this.postsPerPage, this.currentPage);
     // console.log(pageData);
   }
 
-  onDelete(postId: string | null | undefined) {
+  onDelete(postId: string | null | undefined | Blob) {
     this.isLoading = true;
     this.postsService.deletePost(postId).subscribe(
       () => {
