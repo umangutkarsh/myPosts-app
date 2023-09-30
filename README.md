@@ -1,4 +1,4 @@
-# MEAN Stack Posting App:
+# MEAN Stack Posting App
 
 ## Introduction
 Welcome to the documentation for our MEAN (MongoDB, Express.js, Angular, Node.js) stack Post Posting App. This application allows users to create, read, update, and delete posts. It features authentication and authorization, pagination, and uses both template-driven and reactive forms for input. This documentation provides an overview of the application's architecture, features, dependencies, and known issues.
@@ -7,30 +7,30 @@ Welcome to the documentation for our MEAN (MongoDB, Express.js, Angular, Node.js
 <br />
 
 ## Table of Contents
-* [Application Architecture]()
-* [Features]()
-* [Dependencies]()
-* [Known Issues]()
+* [Application Architecture](https://github.com/umangutkarsh/myPosts-app/tree/main#application-architecture)
+* [Features](https://github.com/umangutkarsh/myPosts-app/tree/main#features)
+* [Dependencies](https://github.com/umangutkarsh/myPosts-app/tree/main#dependencies)
+* [Known Issues](https://github.com/umangutkarsh/myPosts-app/tree/main#known-issues)
   
 
 <br />
 
 ## Application Architecture
 * Frontend (Angular)
-**Angular:** The frontend of the application is built using Angular. Angular is a powerful and popular framework for building web applications.
+  * **Angular:** The frontend of the application is built using Angular. Angular is a powerful and popular framework for building web applications.
 
 * Backend (Node.js and Express.js)
-**Node.js:** The server-side logic of the application is powered by Node.js, a JavaScript runtime.
-**Express.js:** Express is used as the backend framework to build robust and scalable APIs.
-**MongoDB:** MongoDB is used as the NoSQL database to store posts and user data.
-**Mongoose:** Mongoose is an elegant MongoDB object modeling tool used to interact with the database.
-**bcrypt:** This library is used for password hashing and securing user data.
-**jsonwebtoken (JWT):** JWT is employed for user authentication and authorization.
-**body-parser:** Body-parser is used to parse incoming request bodies in the middleware.
-**RxJS:** RxJS is used to handle asynchronous operations and data streams in Angular.
+  * **Node.js:** The server-side logic of the application is powered by Node.js, a JavaScript runtime.
+  * **Express.js:** Express is used as the backend framework to build robust and scalable APIs.
+  * **MongoDB:** MongoDB is used as the NoSQL database to store posts and user data.
+  * **Mongoose:** Mongoose is an elegant MongoDB object modeling tool used to interact with the database.
+  * **bcrypt:** This library is used for password hashing and securing user data.
+  * **jsonwebtoken (JWT):** JWT is employed for user authentication and authorization.
+  * **body-parser:** Body-parser is used to parse incoming request bodies in the middleware.
+  * **RxJS:** RxJS is used to handle asynchronous operations and data streams in Angular.
 
 * Frontend Styling
-**Angular Material:** Angular Material is used for creating a sleek and responsive user interface.
+  * **Angular Material:** Angular Material is used for creating a sleek and responsive user interface.
 
 
 <br />
