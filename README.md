@@ -17,8 +17,18 @@ Post posting app built with MEAN stack.
 
 <br />
 
+
+
 ## Introduction
 Welcome to the documentation for our MEAN (MongoDB, Express.js, Angular, Node.js) stack Post Posting App. This application allows users to create, read, update, and delete posts. It features authentication and authorization, pagination, and uses both template-driven and reactive forms for input. This documentation provides an overview of the application's architecture, features, dependencies, and known issues.
+
+
+<br />
+
+[![Mongoose Badge](https://img.shields.io/badge/Mongoose-800?logo=mongoose&logoColor=fff&style=for-the-badge)](https://mongoosejs.com/)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens
+![RxJS](https://img.shields.io/badge/rxjs-%23B7178C.svg?style=for-the-badge&logo=reactivex&logoColor=white)
+
 
 
 <br />
@@ -41,13 +51,10 @@ Welcome to the documentation for our MEAN (MongoDB, Express.js, Angular, Node.js
   * **Express.js:** Express is used as the backend framework to build robust and scalable APIs.
   * **MongoDB:** MongoDB is used as the NoSQL database to store posts and user data.
   * **Mongoose:** Mongoose is an elegant MongoDB object modeling tool used to interact with the database.
-    * [![Mongoose Badge](https://img.shields.io/badge/Mongoose-800?logo=mongoose&logoColor=fff&style=for-the-badge)](https://mongoosejs.com/)
   * **bcrypt:** This library is used for password hashing and securing user data.
   * **jsonwebtoken (JWT):** JWT is employed for user authentication and authorization.
-    * ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
   * **body-parser:** Body-parser is used to parse incoming request bodies in the middleware.
   * **RxJS:** RxJS is used to handle asynchronous operations and data streams in Angular.
-    * ![RxJS](https://img.shields.io/badge/rxjs-%23B7178C.svg?style=for-the-badge&logo=reactivex&logoColor=white)
 
 * Frontend Styling
   * **Angular Material:** Angular Material is used for creating a sleek and responsive user interface.
