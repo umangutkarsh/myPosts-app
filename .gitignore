@@ -46,4 +46,4 @@ Thumbs.db
 nodemon.json
 env
 
-backend/angular
+/backend/angular
