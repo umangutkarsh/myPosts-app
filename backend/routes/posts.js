@@ -44,18 +44,23 @@ router.post(
     });
     // console.log(req.userData);
     // return res.status(200).json({});
-    post.save().then((createdPost) => {
-      //  console.log(createdPost);
-      res.status(201).json({
-        message: "Post created successfully",
-        post: {
-          id: createdPost._id,
-          title: createdPost.title,
-          content: createdPost.content,
-          imagePath: createdPost.imagePath,
-        },
+    post
+      .save()
+      .then((createdPost) => {
+        //  console.log(createdPost);
+        res.status(201).json({
+          message: "Post created successfully",
+          post: {
+            id: createdPost._id,
+            title: createdPost.title,
+            content: createdPost.content,
+            imagePath: createdPost.imagePath,
+          },
+        });
+      })
+      .catch((error) => {
+        res.status(500).json({ message: "Could not add post" });
       });
-    });
   }
 );
 
@@ -78,17 +83,20 @@ router.put(
       creator: req.userData.userId,
     });
     console.log(post);
-    Post.updateOne(
-      { _id: req.params.id, creator: req.userData.userId },
-      post
-    ).then((updatedPost) => {
-      console.log(updatedPost);
-      if (updatedPost.modifiedCount > 0) {
-        res.status(200).json({ message: "Updated successfully" });
-      } else {
-        res.status(401).json({ message: "Not authorized to update" });
-      }
-    });
+    Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
+      .then((updatedPost) => {
+        console.log(updatedPost);
+        if (updatedPost.modifiedCount > 0) {
+          res.status(200).json({ message: "Updated successfully" });
+        } else {
+          res.status(401).json({ message: "Not authorized to update" });
+        }
+      })
+      .catch((error) => {
+        res.status(500).json({
+          message: "Could not update post",
+        });
+      });
   }
 );
 
@@ -113,22 +121,33 @@ router.get("/", (req, res, next) => {
         posts: fetchedPosts,
         maxPosts: count,
       });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Fetching posts failed",
+      });
     });
 });
 
 router.get("/:id", (req, res, next) => {
-  Post.findById(req.params.id).then((post) => {
-    if (post) {
-      res.status(200).json(post);
-    } else {
-      res.status(404).json({ message: "Post not found" });
-    }
-  });
+  Post.findById(req.params.id)
+    .then((post) => {
+      if (post) {
+        res.status(200).json(post);
+      } else {
+        res.status(404).json({ message: "Post not found" });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Fetching post failed",
+      });
+    });
 });
 
 router.delete("/:id", checkAuth, (req, res, next) => {
-  Post.deleteOne({ _id: req.params.id, creator: req.userData.userId }).then(
-    (result) => {
+  Post.deleteOne({ _id: req.params.id, creator: req.userData.userId })
+    .then((result) => {
       console.log(result);
 
       if (result.deleteCount > 0) {
@@ -136,8 +155,12 @@ router.delete("/:id", checkAuth, (req, res, next) => {
       } else {
         res.status(401).json({ message: "Not authorized to delete" });
       }
-    }
-  );
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "Deleting post failed",
+      });
+    });
 });
 
 module.exports = router;

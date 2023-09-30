@@ -23,14 +23,15 @@ router.post("/signup", (req, res, next) => {
         });
       })
       .catch((err) => {
-        res.status(500).json({ error: err });
+        console.log(err);
+        res.status(500).json({ message: "Invalid authentication credentials" });
       });
   });
 });
 
-router.post("/login", (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   let fetchedUser;
-  User.findOne({ email: req.body.email })
+  await User.findOne({ email: req.body.email })
     .then((user) => {
       fetchedUser = user;
       if (!user) {
@@ -54,9 +55,10 @@ router.post("/login", (req, res, next) => {
         .json({ token: token, expiresIn: 3600, userId: fetchedUser._id });
     })
     .catch((err) => {
+      console.log(err);
       return res
         .status(401)
-        .json({ message: "Auth failed", error: err.message });
+        .json({ message: "Invalid authentication credentials" });
     });
 });
 
